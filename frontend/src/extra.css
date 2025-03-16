@@ -1,0 +1,176 @@
+/* Home.css */
+.home {
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298); /* Maintains consistency */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft Blur Effects */
+.home::before, .home::after {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.4;
+}
+
+.home::before {
+  background: #ff9ff3;
+  top: 5%;
+  left: 10%;
+}
+
+.home::after {
+  background: #a29bfe;
+  bottom: 5%;
+  right: 10%;
+}
+
+/* Heading Styling */
+.container h1 {
+  font-size: 54px;
+  font-weight: 800;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #ff9ff3, #f368e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Subtext Styling */
+.container p {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: 'Poppins', sans-serif;
+  max-width: 650px;
+  margin: 15px auto;
+  opacity: 0.9;
+  animation: fadeIn 1.4s ease-in-out;
+}
+
+/* Glassmorphic Button */
+.get-started-btn {
+  margin-top: 25px;
+  padding: 12px 28px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  animation: fadeIn 1.6s ease-in-out;
+}
+
+.get-started-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .container h1 {
+      font-size: 40px;
+  }
+
+  .container p {
+      font-size: 16px;
+  }
+
+  .get-started-btn {
+      font-size: 16px;
+      padding: 10px 24px;
+  }
+}
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+h1 {
+  animation: float 3s ease-in-out infinite;
+}
+
+
+ /* Home Button*/ 
+ /* Home Button */
+.home-btn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  background: linear-gradient(135deg, #ff9ff3, #f368e0);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 4px 15px rgba(243, 104, 224, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Button Hover Effect */
+.home-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 20px rgba(243, 104, 224, 0.5);
+}
+
+/* Button Click Effect */
+.home-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 10px rgba(243, 104, 224, 0.5);
+}
+
+/* Cool Shine Effect */
+.home-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-45deg);
+  transition: left 0.5s ease-in-out;
+}
+
+.home-btn:hover::before {
+  left: 100%;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .home-btn {
+      font-size: 16px;
+      padding: 10px 24px;
+  }
+}

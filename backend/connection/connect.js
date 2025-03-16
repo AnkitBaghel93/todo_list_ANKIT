@@ -6,7 +6,7 @@ try {
     console.log("Database is connected successfully");
   })
 } catch (error) {
-  res.status(400).json({
+  res.status(200).json({
     message : "Database is not connected"
   })
 }

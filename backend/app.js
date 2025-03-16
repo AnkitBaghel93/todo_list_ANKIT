@@ -1,15 +1,18 @@
 const express = require('express');
 const app = express();
 const connectDB = require('./connection/connect');
+const cors = require('cors');
 
 const auth = require("./routes/auth");
 const list = require("./routes/list");
 app.use(express.json());
 connectDB();
 
+app.use(cors());
+
 app.get('/', (req, res)=>{
   console.log(req.url, req.method);
-res.send("hello bhai");
+  res.send("hello bhai");
 })
 
 app.use("/api/v1", auth);
