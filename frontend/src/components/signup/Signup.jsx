@@ -3,6 +3,8 @@ import "./Signup.css";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
   const history = useNavigate();
@@ -31,6 +33,8 @@ const Signup = () => {
       });
   
       history("/signin");
+
+       toast.success("You SignUp Successfully!");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         alert(error.response.data.message); // Shows "User Already Exists"
@@ -42,6 +46,8 @@ const Signup = () => {
   
   return (
     <div className="signup-container">
+      <ToastContainer/> 
+      
       <div className="signup-box">
         <h2>Create an Account</h2>
         <form>

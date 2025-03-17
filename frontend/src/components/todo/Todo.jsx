@@ -20,7 +20,7 @@ const Todo = () => {
     setArray([...Array, Inputs]); // Spread operator to maintain previous state
     console.log("Updated Array:", Array);
     setInputs({title: "", body: ""});
-    toast("Your Task is Added Successfully!");
+    toast.success("Your Task is Added Successfully!");
     toast.error("But Your Task Is Not Saved, Please SignUp First!");
   };
 

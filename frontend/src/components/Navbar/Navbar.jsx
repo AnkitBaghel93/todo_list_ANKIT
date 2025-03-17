@@ -1,12 +1,21 @@
 import React from 'react';
 import "./Navbar.css";
-import { FaRegUserCircle } from "react-icons/fa";
 import {Link} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import { authActions } from "../../store";
 
 const Navbar = () => {
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const dispatch = useDispatch();
+  const logout = () => {
+    sessionStorage.clear("id");
+    dispatch(authActions.logout());
+  }
+  
   return (
     <div>
-      <nav className="navbar navbar-expand-lg ">
+      <nav className="navbar navbar-expand-lg "> 
   <div className="container">
  <Link className="navbar-brand" to="/"><b> DooBeeDoo</b></Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,20 +32,21 @@ const Navbar = () => {
         <li className="nav-item">
        <Link className="nav-link active" aria-current="page" to="/todo"> Todo</Link>
         </li>
-        <li className="nav-item">
-       <Link className="nav-link active" aria-current="page" to="/signup">Sign Up</Link>
-        </li>
-        <li className="nav-item">
-       <Link className="nav-link active" aria-current="page" to="/signin">Sign In</Link>
-        </li>
-        <li className="nav-item">
-       <Link className="nav-link active" aria-current="page" to="#">Log Out</Link>
-        </li>
-        {/* <li className="nav-item">
-       <Link className="nav-link active" aria-current="page" to="#">
-          <FaRegUserCircle />
-            </Link>
-        </li> */}
+        {!isLoggedIn && 
+         (   <>
+         <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/signup">Sign Up</Link>
+          </li>
+          <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/signin">Sign In</Link>
+          </li>
+          </>)}
+       {isLoggedIn && (    
+        <li className="nav-item"   onClick={logout}>
+                <Link className="nav-link active" aria-current="page" to="#">Log Out</Link>
+              
+        </li>)}
+    
       </ul>
     </div>
   </div>

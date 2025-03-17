@@ -3,8 +3,11 @@ import "./Signin.css";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { authActions } from "../../store";
 
 const Signin = () => {
+  const dispatch = useDispatch();
   const history = useNavigate();
   const [Inputs, setInputs] = useState({
     email: "",
@@ -22,18 +25,26 @@ const Signin = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3000/api/v1/signin", Inputs);
-      
+      console.log("Server Response:", response.data);
+
+
       if (response.data.user) {
-        console.log(response.data.user._id); // Access correct object
+        sessionStorage.setItem("id", response.data.user._id);
+        dispatch(authActions.login());
         history("/todo");
-      } else {
+      } 
+      else {
         alert("Unexpected response from server");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       if (error.response && error.response.data.message) {
         alert(error.response.data.message);
-      } else {
+    
+      } 
+      else {
         alert("Something went wrong. Please try again.");
+      
       }
     }
   };
