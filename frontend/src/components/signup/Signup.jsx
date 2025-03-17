@@ -24,7 +24,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3000/api/v1/register", Inputs);
-      
+      console.log("1");
       alert(response.data.message);
       setInputs({
         email: "",
@@ -33,8 +33,7 @@ const Signup = () => {
       });
   
       history("/signin");
-
-       toast.success("You SignUp Successfully!");
+      toast.success("You SignUp Successfully!");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         alert(error.response.data.message); // Shows "User Already Exists"

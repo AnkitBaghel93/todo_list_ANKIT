@@ -1,28 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Todo.css";
 import TodoCards from "./TodoCards";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Update from "./Update";
+import axios from 'axios';
 
+let id = sessionStorage.getItem("id");
 
 const Todo = () => {
   const [showTextarea, setShowTextarea] = useState(false);
   const [Inputs, setInputs] = useState({title: "", body: ""});
   const [Array, setArray] = useState([]);
+  
+  useEffect(() => {
+    console.log("User  ID:", id);
+    const fetch = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/v2/getTasks/${id}`);
+        console.log("Full Response:", response); // Log the full response
+        console.log("List of Tasks:", response.data.list); // Log the specific list
+      } catch (error) {
+        console.error("Error fetching tasks:", error); // Log any errors
+      }
+    };
+    fetch();
+  }, []);
 
   const change= (e) => {
         const { name, value} = e.target;
         setInputs({...Inputs, [name]: value});
   };
 
-  const submit = () => {
-    setArray([...Array, Inputs]); // Spread operator to maintain previous state
-    console.log("Updated Array:", Array);
-    setInputs({title: "", body: ""});
-    toast.success("Your Task is Added Successfully!");
-    toast.error("But Your Task Is Not Saved, Please SignUp First!");
+  const submit = async() => {
+    if(Inputs.title === "" || Inputs.body === ""){
+      toast.error("Title or Body Can't Be Empty");
+    } else {
+      if(id){
+        await axios.post("http://localhost:3000/api/v2/addTask", {
+          title: Inputs.title,
+          body: Inputs.body,
+          id: id,
+        }).then((response) => {
+          console.log(response);
+        });
+        setInputs({title: "", body: ""});
+        toast.success("Your Task is Saved Successfully!");
+      }
+      else{
+        setArray([...Array, Inputs]); // Spread operator to maintain previous state
+        // console.log("Updated Array:", Array);
+        setInputs({title: "", body: ""});
+        toast.success("Your Task is Added Successfully!");
+        toast.error("But Your Task Is Not Saved, Please SignUp First!");
+       }  
+    }
   };
+   
+       
+       
+  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
