@@ -6,26 +6,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import Update from "./Update";
 import axios from 'axios';
 
-let id = sessionStorage.getItem("id");
+let id = sessionStorage.getItem("id") || "";
+console.log("Retrieved ID from sessionStorage:", id);
+
 
 const Todo = () => {
   const [showTextarea, setShowTextarea] = useState(false);
   const [Inputs, setInputs] = useState({title: "", body: ""});
   const [Array, setArray] = useState([]);
+  const [id, setId] = useState(sessionStorage.getItem("id") || "");
+
+
+   
   
-  useEffect(() => {
-    console.log("User  ID:", id);
-    const fetch = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/v2/getTasks/${id}`);
-        console.log("Full Response:", response); // Log the full response
-        console.log("List of Tasks:", response.data.list); // Log the specific list
-      } catch (error) {
-        console.error("Error fetching tasks:", error); // Log any errors
-      }
-    };
-    fetch();
-  }, []);
 
   const change= (e) => {
         const { name, value} = e.target;
@@ -80,6 +73,21 @@ const Todo = () => {
    document.getElementById("todo-update").style.display = value;
   }
 
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await axios.post(`http://localhost:3000/api/v2/getTask/${id}`).then((response)=>{
+          setArray(response.data.list);
+        })
+        console.log("Full Response:", response); // Log the full response
+        console.log("List of Tasks:", response.data.list); // Log the specific list
+      } catch (error) {
+        console.error("Error fetching tasks:", error); // Log any errors
+      }
+    };
+    fetch();
+  }, [submit]);
+  
 return (
 <>
 <div className="todo d-flex flex-column">
