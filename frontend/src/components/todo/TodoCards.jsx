@@ -3,7 +3,7 @@ import './TodoCards.css';
 import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineBrowserUpdated } from "react-icons/md";
 
-const TodoCards = ({ title, body ,id , delid , display}) => {
+const TodoCards = ({ title, body ,id , delid , display, updateId, toBeUpdate }) => {
  
 return (
 <div className="todo-item p-3">
@@ -11,7 +11,10 @@ return (
           <h5 className="my-3">{title.split("", 20)}</h5>
           <p className="text">{body.split("", 50)}...</p> 
           <div className="card-btn my-1">
-            <div onClick={() => {display('block');
+            <div onClick={() => {
+              display('block');
+              
+              toBeUpdate(updateId);
 
             }}>
             <MdOutlineBrowserUpdated className="card-btn-update"/>

@@ -1,6 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {  toast } from 'react-toastify';
 
-const Update = ({ display }) => {
+
+const Update = ({ display ,update }) => {
+  const [Inputs, setInputs] = useState({
+    title:"",
+    body:"",
+  });
+
+  useEffect(() => {
+    setInputs({
+      title:update.title,
+      body:update.body,
+    });
+  }, []);
+
+  const change = (e) => {
+    const {name, value} = e.target;
+    setInputs({...Inputs, [name]: value});
+  }
+  const submit = async () => {
+   await axios
+   .put(` http://localhost:3000/api/v2/${update.id}`, Inputs)
+   .then((response) => {
+   toast.success(response.data.message);
+
+   })
+  }
   return (
     <div className="position-relative container p-4 bg-light rounded shadow-sm">
       {/* Close Button */}
@@ -15,17 +42,26 @@ const Update = ({ display }) => {
       <input 
         type="text" 
         className="form-control mb-3" 
-        placeholder="Enter new title..." 
+       
+        value={Inputs}
+        name='title'
+        onChange={change}
       />
       
       <textarea 
         className="form-control mb-3" 
         rows="4" 
-        placeholder="Enter task details..."
+       
+        value={Inputs}
+        name='body'
+        onChange={change}
       ></textarea>
       
       <div className="d-flex justify-content-center">
-        <button className="btn btn-dark w-50">UPDATE</button>
+        <button 
+        className="btn btn-dark w-50"
+        onClick={submit}
+        >UPDATE</button>
       </div>
     </div>
   );

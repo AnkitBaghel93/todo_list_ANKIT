@@ -8,17 +8,14 @@ import axios from 'axios';
 
 let id = sessionStorage.getItem("id") || "";
 console.log("Retrieved ID from sessionStorage:", id);
-
+let toUpdateArray = [];
 
 const Todo = () => {
   const [showTextarea, setShowTextarea] = useState(false);
   const [Inputs, setInputs] = useState({title: "", body: ""});
   const [Array, setArray] = useState([]);
   const [id, setId] = useState(sessionStorage.getItem("id") || "");
-
-
-   
-  
+ 
 
   const change= (e) => {
         const { name, value} = e.target;
@@ -49,17 +46,13 @@ const Todo = () => {
        }  
     }
   };
-   
-       
-       
   
-
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // Prevents new line in textarea
-      submit();
-     } };
-
+      if (e.key === "Enter") {
+        e.preventDefault(); // Prevents new line in textarea
+        submit();
+  } };
+  
   const del = async (Cardid) => {
     console.log(id);
     if(id){
@@ -80,6 +73,10 @@ const Todo = () => {
    document.getElementById("todo-update").style.display = value;
   }
 
+  const update =(value) => {
+   toUpdateArray =Array[value];
+  }
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -94,72 +91,85 @@ const Todo = () => {
     };
     fetch();
   }, [submit]);
-
-return (
-<>
-<div className="todo d-flex flex-column">
-<ToastContainer/> 
-       <div className="todo-main container d-flex  justify-content-center align-items-center ">
-     
-         <div className="d-flex flex-column todo-inputs">
-           <input
-             type="text"
-             placeholder="Enter Title..."
-             onClick={() => setShowTextarea(true)}
-             className="todo-title"
-             name="title"
-             value={Inputs.title}
-             onChange={change}
-             onKeyDown={handleKeyDown}
-           />
-           <textarea
-             id="textarea"
-             placeholder="Enter Details..."
-             className={`todo-body ${showTextarea ? "visible" : ""}`}
-             name="body"
-             value={Inputs.body}
-             onChange={change}
-             onKeyDown={handleKeyDown}
-             />
-           <button className="todo-add-btn" onClick={submit}>
-             Add
-           </button>
-         </div>
-       </div>
    
-       <div className="todo-card my-5">
-  <div className="container-fluid">
-    <div className="row justify-content-center">
-      {Array && Array.length > 0 ? (
-        Array.map((item, index) => (
-          <div key={index} className="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex justify-content-center">
-            <TodoCards 
-            title={item.title} 
-            body={item.body} 
-            id={item._id} 
-            delid={del}  d
-            isplay={dis}/>
-          </div>
-        ))
-      ) : (
-        <p className="text-center">No Todos Added Yet</p>
-      )}
+  return (
+  <>
+  <div className="todo d-flex flex-column">
+  <ToastContainer/> 
+         <div className="todo-main container d-flex  justify-content-center align-items-center ">
+       
+           <div className="d-flex flex-column todo-inputs">
+             <input
+               type="text"
+               placeholder="Enter Title..."
+               onClick={() => setShowTextarea(true)}
+               className="todo-title"
+               name="title"
+               value={Inputs.title}
+               onChange={change}
+               onKeyDown={handleKeyDown}
+             />
+             <textarea
+               id="textarea"
+               placeholder="Enter Details..."
+               className={`todo-body ${showTextarea ? "visible" : ""}`}
+               name="body"
+               value={Inputs.body}
+               onChange={change}
+               onKeyDown={handleKeyDown}
+               />
+             <button className="todo-add-btn" onClick={submit}>
+               Add
+             </button>
+           </div>
+         </div>
+     
+         <div className="todo-card my-5">
+    <div className="container-fluid">
+      <div className="row justify-content-center">
+        {Array && Array.length > 0 ? (
+          Array.map((item, index) => (
+            <div key={index} className="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex justify-content-center">
+              <TodoCards 
+              title={item.title} 
+              body={item.body} 
+              id={item._id} 
+              delid={del}  
+              display={dis}
+              updateId={index}
+              toBeUpdate={update}
+              />
+              
+            </div>
+          ))
+        ) : (
+          <p className="text-center">No Todos Added Yet</p>
+        )}
+      </div>
     </div>
   </div>
-</div>
-
-</div>
-
-<div className="todo-update bg-primary" id="todo-update">
-  <div className="container">
-
-      <Update display={dis}/>    
-      
+  
   </div>
-</div>
-</>
-) };
-export default Todo;
+  
+  <div className="todo-update bg-primary" id="todo-update">
+    <div className="container">
+  
+        <Update display={dis} update={toUpdateArray}/>    
+        
+    </div>
+  </div>
+  </>
+  ) };
+  export default Todo;
+  
+
+
+   
+       
+       
+  
+
+
     
 
  
