@@ -60,11 +60,18 @@ const Todo = () => {
       submit();
      } };
 
-  const del = (id) => {
+  const del = async (Cardid) => {
     console.log(id);
-    Array.splice(id, "1");
-    setArray([...Array]);
-    toast.success("Your Task is Deleted Successfully!");
+    if(id){
+      await axios.delete(` http://localhost:3000/api/v2/deleteTask/${Cardid}`, {data: {id:id}}).then((response) => {console.log(response)});
+      // Array.splice(id, "1");
+      // setArray([...Array]);
+      toast.success("Your Task is Deleted Successfully!");
+    }
+    else{
+      toast.error("Please SignUp First!");
+    }
+  
     
   }   
   
@@ -87,7 +94,7 @@ const Todo = () => {
     };
     fetch();
   }, [submit]);
-  
+
 return (
 <>
 <div className="todo d-flex flex-column">
@@ -126,7 +133,12 @@ return (
       {Array && Array.length > 0 ? (
         Array.map((item, index) => (
           <div key={index} className="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex justify-content-center">
-            <TodoCards title={item.title} body={item.body} id={index} delid={del}  display={dis}/>
+            <TodoCards 
+            title={item.title} 
+            body={item.body} 
+            id={item._id} 
+            delid={del}  d
+            isplay={dis}/>
           </div>
         ))
       ) : (
