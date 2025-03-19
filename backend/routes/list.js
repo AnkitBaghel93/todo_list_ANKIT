@@ -24,15 +24,15 @@ router.put("/updateTask/:id", async (req, res) => {
   try {
     const {title, body } = req.body;
     
-  
-    
     const list =  await List.findByIdAndUpdate(req.params.id, {title, body});
       list.save().then(()=> res.status(200).json({message: "Task Updated"}));
+      
+    } catch (error) {
+      console.log(error);
+    }
+  });
     
-  } catch (error) {
-    console.log(error);
-  }
-});
+  
 
 //delete
 router.delete("/deleteTask/:id", async (req, res) => {

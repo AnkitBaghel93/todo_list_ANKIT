@@ -9,7 +9,11 @@ const list = require("./routes/list");
 
 app.use(express.json());
 connectDB();
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3001",  // Adjust to your frontend port
+    credentials: true,
+  }));
+  
 
 
 // API routes

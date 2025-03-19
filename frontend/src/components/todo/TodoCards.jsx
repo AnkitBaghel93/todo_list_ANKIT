@@ -4,7 +4,10 @@ import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineBrowserUpdated } from "react-icons/md";
 
 const TodoCards = ({ title, body ,id , delid , display, updateId, toBeUpdate }) => {
+
  
+  
+
 return (
 <div className="todo-item p-3">
       <div className="card">
@@ -12,13 +15,13 @@ return (
           <p className="text">{body.split("", 50)}...</p> 
           <div className="card-btn my-1">
             <div onClick={() => {
+              console.log("Sending task to update modal:", { id, title, body }); // Debugging
               display('block');
-              
-              toBeUpdate(updateId);
-
+              toBeUpdate(id); // Pass entire task object
             }}>
             <MdOutlineBrowserUpdated className="card-btn-update"/>
             </div>
+
               <div onClick={() => delid(id)}>
             <MdDeleteForever className="card-btn-delete"  />
               </div>
@@ -29,6 +32,8 @@ return (
 );
 };
 export default TodoCards;
+              
+
 
 
 
