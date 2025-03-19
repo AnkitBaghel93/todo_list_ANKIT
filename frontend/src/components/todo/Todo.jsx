@@ -10,7 +10,7 @@ const Todo = () => {
   const [showTextarea, setShowTextarea] = useState(false);
   const [Inputs, setInputs] = useState({title: "", body: ""});
   const [Array, setArray] = useState([]);
-  const [id, setId] = useState(sessionStorage.getItem("id") || "");
+  const [id] = useState(sessionStorage.getItem("id") || "");
   const [update, setUpdate] = useState(null); 
 
   const change= (e) => {

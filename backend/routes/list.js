@@ -27,7 +27,6 @@ router.post("/addTask", async (req, res) => {
   }
 });
 
-
 //update task
 router.put("/updateTask/:id", async (req, res) => {
   try {
@@ -41,42 +40,42 @@ router.put("/updateTask/:id", async (req, res) => {
     }
   });
     
-  
-
-router.delete("/deleteTask/:id", async (req, res) => {
-    try {
-      const taskId = req.params.id; // Get task ID from URL params
-      console.log("Deleting Task ID:", taskId);
-  
-      // Check if the task exists
-      const task = await List.findById(taskId);
-      if (!task) {
-        return res.status(404).json({ message: "Task not found" });
+ //delete task 
+  router.delete("/deleteTask/:id", async (req, res) => {
+      try {
+        const taskId = req.params.id; // Get task ID from URL params
+        console.log("Deleting Task ID:", taskId);
+    
+        // Check if the task exists
+        const task = await List.findById(taskId);
+        if (!task) {
+          return res.status(404).json({ message: "Task not found" });
+        }
+    
+        // Delete task from user's list
+        await User.updateMany({}, { $pull: { list: taskId } });
+    
+        // Delete the task itself
+        await List.findByIdAndDelete(taskId);
+    
+        return res.status(200).json({ message: "Task Deleted" });
+      } catch (error) {
+        console.error("Delete Task Error:", error);
+        res.status(500).json({ message: "Server Error" });
       }
-  
-      // Delete task from user's list
-      await User.updateMany({}, { $pull: { list: taskId } });
-  
-      // Delete the task itself
-      await List.findByIdAndDelete(taskId);
-  
-      return res.status(200).json({ message: "Task Deleted" });
-    } catch (error) {
-      console.error("Delete Task Error:", error);
-      res.status(500).json({ message: "Server Error" });
-    }
-});
-  
+  });
 
-//getTask
-router.post("/getTask/:id", async (req, res) =>{
-  const list = await List.find({user: req.params.id}).sort({createdAt:-1});
-if(list.length!== 0){
-  res.status(200).json({ list : list});
-}
-else{
-  res.status(200).json({ "message": "No Tasks" });
-}
-});
-
-module.exports = router;
+  //getTask
+  router.post("/getTask/:id", async (req, res) =>{
+    const list = await List.find({user: req.params.id}).sort({createdAt:-1});
+  if(list.length!== 0){
+    res.status(200).json({ list : list});
+  }
+  else{
+    res.status(200).json({ "message": "No Tasks" });
+  }
+  });
+  
+  module.exports = router;
+  
+  
