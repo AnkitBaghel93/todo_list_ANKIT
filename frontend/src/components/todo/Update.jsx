@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Update = ({ display, update }) => {
+const Update = ({ display, update ,setArray}) => {
   
 const [inputs, setInputs] = useState({
     title: "",
@@ -33,7 +33,7 @@ const handleSubmit = async () => {
       console.log("Submitting update for task ID:", update?._id);
   
       if (!update || !update._id) {
-        toast.error("Task ID is missing!");
+        toast.error("You Haven't SignUp Yet!");
         return;
       }
   
@@ -50,6 +50,14 @@ const handleSubmit = async () => {
   
         if (response.status === 200) {
           toast.success(response.data.message || "Task updated successfully!");
+
+        //Update the local task list instantly
+         setArray((prevArray) =>
+         prevArray.map((task) =>
+          task._id === update._id ? { ...task, title: inputs.title, body: inputs.body } : task
+          )
+         );
+
           display("none"); // Close modal after update
         } else {
           toast.error("Unexpected response from server!");

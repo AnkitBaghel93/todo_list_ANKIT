@@ -5,19 +5,28 @@ const List = require("../models/list");
 //create task
 router.post("/addTask", async (req, res) => {
   try {
-    const {title, body, id} = req.body;
+    const { title, body, id } = req.body;
     const existingUser = await User.findById(id);
-    if(existingUser)
-    {
-      const list = new List({title, body, user:existingUser});
-      await list.save().then(()=> res.status(200).json({list}));
-      existingUser.list.push(list);
-      existingUser.save();
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    const list = new List({ title, body, user: existingUser });
+    await list.save();
+
+    // Push the new task into the user's list and save the user document
+    existingUser.list.push(list);
+    await existingUser.save();
+
+    //Return the created task properly
+    return res.status(200).json({ message: "Task added successfully", task: list });
   } catch (error) {
-    console.log(error);
+    console.log("Add Task Error:", error);
+    return res.status(500).json({ message: "Failed to add task" });
   }
 });
+
 
 //update task
 router.put("/updateTask/:id", async (req, res) => {

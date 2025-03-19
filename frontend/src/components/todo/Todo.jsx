@@ -6,8 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Update from "./Update";
 import axios from 'axios';
 
-let id = sessionStorage.getItem("id") || "";
-
 const Todo = () => {
   const [showTextarea, setShowTextarea] = useState(false);
   const [Inputs, setInputs] = useState({title: "", body: ""});
@@ -15,39 +13,47 @@ const Todo = () => {
   const [id, setId] = useState(sessionStorage.getItem("id") || "");
   const [update, setUpdate] = useState(null); 
 
- 
-
   const change= (e) => {
         const { name, value} = e.target;
         setInputs({...Inputs, [name]: value});
   };
 
-  const submit = async() => {
-    if(Inputs.title === "" || Inputs.body === ""){
+  const submit = async () => {
+    if (Inputs.title === "" || Inputs.body === "") {
       toast.error("Title or Body Can't Be Empty");
     } else {
-      if(id){
-        await axios.post("http://localhost:3000/api/v2/addTask", {
-          title: Inputs.title,
-          body: Inputs.body,
-          id: id,
-        }).then((response) => {
-          console.log(response);
-        });
-       
-        setInputs({title: "", body: ""});
-        toast.success("Your Task is Saved Successfully!");
-      }
-      else{
-        // Spread operator to maintain previous state
-        setArray((prevArray) => [...prevArray, Inputs]);
-        // console.log("Updated Array:", Array);
-        setInputs({title: "", body: ""});
+      if (id) {
+        try {
+          const response = await axios.post("http://localhost:3000/api/v2/addTask", {
+            title: Inputs.title,
+            body: Inputs.body,
+            id: id,
+          });
+  
+          if (response.status === 200) {
+            console.log("Task Added Successfully:", response.data);
+  
+            // Ensure the new task is added to the state instantly
+            setArray((prevArray) => [...prevArray, response.data.task]);
+  
+            setInputs({ title: "", body: "" });
+            toast.success("Your Task is Saved Successfully!");
+          } else {
+            toast.error("Failed to add task!");
+          }
+        } catch (error) {
+          console.error("Error adding task:", error);
+          toast.error("Error adding task!");
+        }
+      } else {
+        setArray((prevArray) => [...prevArray, Inputs]); // Add to local state if no ID
+        setInputs({ title: "", body: "" });
         toast.success("Your Task is Added Successfully!");
-        toast.error("But Your Task Is Not Saved, Please SignUp First!");
-       }  
+        toast.error("But Your Task Is Not Saved, Please Sign Up First!");
+      }
     }
   };
+  
   
   const handleKeyDown = (e) => {
       if (e.key === "Enter") {
@@ -56,49 +62,42 @@ const Todo = () => {
   } };
   
   const del = async (Cardid) => {
-    console.log("Deleting task with ID:", Cardid);
-    
     if (id) {
+      setArray((prevArray) => prevArray.filter((task) => task._id !== Cardid));
       try {
-        const response = await axios.delete(`http://localhost:3000/api/v2/deleteTask/${Cardid}`);
-        console.log("Delete Response:", response);
-        
-        // Remove the deleted task from the state
-        setArray((prevArray) => prevArray.filter((task) => task._id !== Cardid));
-        
+        await axios.delete(`http://localhost:3000/api/v2/deleteTask/${Cardid}`);
         toast.success("Your Task is Deleted Successfully!");
       } catch (error) {
         console.error("Error deleting task:", error);
         toast.error("Failed to delete task!");
+        // Rollback: Restore the deleted task in case of an API error
+      setArray((prevArray) => [...prevArray, { _id: Cardid }]);  
       }
     } else {
       toast.error("Please Sign Up First!");
     }
   };
   
-
   const dis = (value) => {
    console.log(value);
    document.getElementById("todo-update").style.display = value;
   }
-
-
-
+        
   const handleUpdate = (taskId) => {
     console.log("Looking for task with ID:", taskId);
     const taskToUpdate = Array.find((task) => task._id === taskId);
     if (taskToUpdate) {
       console.log("Setting update state with:", taskToUpdate);
       setUpdate({ ...taskToUpdate });
+      dis("block"); // Ensure the update modal appears
     } else {
       console.warn("Task not found for update:", taskId);
     }
   };
-  
+    
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        console.log("Fetching tasks for ID:", id); // Debugging
         const response = await axios.post(`http://localhost:3000/api/v2/getTask/${id}`);
   
         if (!response || !response.data) {
@@ -115,7 +114,7 @@ const Todo = () => {
     };
     if (id) fetchTasks();
   }, [id]);
-  
+
   return (
   <>
   <div className="todo d-flex flex-column">
@@ -151,7 +150,8 @@ const Todo = () => {
   <div className="todo-card my-5">
     <div className="container-fluid">
       <div className="row justify-content-center">
-        {Array && Array.length > 0 ? (
+      {Array?.length > 0 ? (
+
           Array.map((item, index) => (
             <div key={index} className="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex justify-content-center">
                 <TodoCards 
@@ -174,13 +174,26 @@ const Todo = () => {
   </div>
   <div className="todo-update bg-primary" id="todo-update">
     <div className="container">
-        <Update display={dis} update={update}/>    
+        <Update display={dis} update={update} setArray={setArray}  />    
     </div>
   
   </div>
   </>
   ) };
   export default Todo;
+ 
+
+
+
+
+    
+        
+
+
+
+
+  
+  
   
               
   
