@@ -34,19 +34,30 @@ router.put("/updateTask/:id", async (req, res) => {
     
   
 
-//delete
 router.delete("/deleteTask/:id", async (req, res) => {
-  try {
-    const {id} = req.body;
-    const existingUser = await User.findByIdAndUpdate(id, {$pull: {list: req.params.id}});
-    if(existingUser)
-    {
-    const list =  await List.findByIdAndDelete(req.params.id).then(()=> res.status(200).json({message: "Task Deleted"}));
+    try {
+      const taskId = req.params.id; // Get task ID from URL params
+      console.log("Deleting Task ID:", taskId);
+  
+      // Check if the task exists
+      const task = await List.findById(taskId);
+      if (!task) {
+        return res.status(404).json({ message: "Task not found" });
+      }
+  
+      // Delete task from user's list
+      await User.updateMany({}, { $pull: { list: taskId } });
+  
+      // Delete the task itself
+      await List.findByIdAndDelete(taskId);
+  
+      return res.status(200).json({ message: "Task Deleted" });
+    } catch (error) {
+      console.error("Delete Task Error:", error);
+      res.status(500).json({ message: "Server Error" });
     }
-  } catch (error) {
-    console.log(error);
-  }
 });
+  
 
 //getTask
 router.post("/getTask/:id", async (req, res) =>{

@@ -56,25 +56,32 @@ const Todo = () => {
   } };
   
   const del = async (Cardid) => {
-    console.log(id);
-    if(id){
-      await axios
-      .delete(`http://localhost:3000/api/v2/deleteTask/${Cardid}`)
-      .then((response) => {console.log(response)});
-     
-      // Array.splice(id, "1");
-      // setArray([...Array]);
-      toast.success("Your Task is Deleted Successfully!");
+    console.log("Deleting task with ID:", Cardid);
+    
+    if (id) {
+      try {
+        const response = await axios.delete(`http://localhost:3000/api/v2/deleteTask/${Cardid}`);
+        console.log("Delete Response:", response);
+        
+        // Remove the deleted task from the state
+        setArray((prevArray) => prevArray.filter((task) => task._id !== Cardid));
+        
+        toast.success("Your Task is Deleted Successfully!");
+      } catch (error) {
+        console.error("Error deleting task:", error);
+        toast.error("Failed to delete task!");
+      }
+    } else {
+      toast.error("Please Sign Up First!");
     }
-    else{
-      toast.error("Please SignUp First!");
-    }
-  }   
+  };
+  
 
   const dis = (value) => {
    console.log(value);
    document.getElementById("todo-update").style.display = value;
   }
+
 
 
   const handleUpdate = (taskId) => {
