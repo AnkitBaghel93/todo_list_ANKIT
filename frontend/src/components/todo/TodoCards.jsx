@@ -9,7 +9,7 @@ return (
 <div className="todo-item p-3">
     <div className="card">
       <h5 className="my-3">{title.split("", 20)}</h5>
-      <p className="text">{body.split("", 50)}...</p> 
+      <p className="text">{body.split("", 50)}</p> 
           <div className="card-btn my-1">
               <div onClick={() => {
                 console.log("Sending task to update modal:", { id, title, body }); // Debugging

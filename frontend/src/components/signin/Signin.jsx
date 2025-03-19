@@ -14,12 +14,10 @@ const Signin = () => {
     password: ""
   });
    
-
   const change = (e) => {
     const {name, value} = e.target;
     setInputs({...Inputs, [name]: value});
   }
-    
 
   const submit = async (e) => {
     e.preventDefault();
@@ -50,11 +48,7 @@ const Signin = () => {
       }
     }
   };
-  
-   
-  
- 
-
+    
   return (
     <div className="signin-container">
       <div className="signin-box">
@@ -92,5 +86,11 @@ const Signin = () => {
     </div>
   );
 };
-
 export default Signin;
+
+  
+   
+  
+ 
+
+

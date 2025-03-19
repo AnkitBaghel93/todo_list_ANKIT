@@ -46,15 +46,13 @@
 .todo-body::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
-
-
-
 /* Responsive */
 @media (max-width: 768px) {
   .todo-main {
       width: 90%;
   }
 }
+
 /* Add Button - Modern Gradient & Hover Effect */
 .todo-add-btn {
   width: 100%;
@@ -85,7 +83,6 @@
   transform: scale(0.98);
   box-shadow: 0px 3px 8px rgba(255, 118, 136, 0.5);
 }
-
 
 /* Hidden Textarea Initially */
 .todo-body {
@@ -124,8 +121,8 @@
 .todo-card-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center cards in row */
-  gap: 20px; /* Space between cards */
+  justify-content: center; 
+  gap: 20px; 
   padding: 20px;
 }
 
@@ -135,20 +132,15 @@
   border-radius: 15px;
   width: 100%;
   min-width:100%; 
-  /* max-width: 75vw; */
   min-height: 100vh;
   max-height: auto;
   text-align: center;
   justify-content: center;
 }
- 
+
 .container-fluid {
   width: 100%;
 }
- 
-
-
-
 /* Grid Layout for Cards */
 .row {
   display: flex;
@@ -156,14 +148,12 @@
   justify-content: center;
   text-align: center;
 }
-
+ 
 .col-lg-3 {
   flex: 1 1 calc(33.33% - 20px); /* 3 per row */
   max-width: 300px;
   min-width: 250px;
 }
-
-
 
 /* Responsive for smaller screens */
 @media (max-width: 992px) {
@@ -179,7 +169,6 @@
 }
 
 .todo-update {
- 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,3 +191,14 @@
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
+ 
+
+
+
+
+
+
+
+
+ 
+

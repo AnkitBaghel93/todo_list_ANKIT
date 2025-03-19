@@ -16,6 +16,7 @@
   text-align: center;
   background: rgba(255, 255, 255, 0.15);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgb(79, 77, 77);
 }
 .todo-item{
   width: 100%;
@@ -32,6 +33,8 @@
 
 .card p {
   font-size: 0.9rem;
+  color: #f8c291;
+  font-weight: bold;
   word-wrap: break-word;
   padding-left: 5px;
   padding-right: 5px;
@@ -72,7 +75,7 @@
 .card-btn-delete{
   font-size: 23px;
   cursor: pointer;
-  color: red;
+  color: rgb(222, 116, 34);
   border-radius: 100%;
 }
 
@@ -80,6 +83,7 @@
   font-size: 23px;
   cursor: pointer;
   border-radius: 100%;
+  color: aqua;
 }
 
 .card-btn-delete:hover{

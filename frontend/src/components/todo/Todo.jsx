@@ -7,8 +7,6 @@ import Update from "./Update";
 import axios from 'axios';
 
 let id = sessionStorage.getItem("id") || "";
-console.log("Retrieved ID from sessionStorage:", id);
-// let toUpdateArray = [];
 
 const Todo = () => {
   const [showTextarea, setShowTextarea] = useState(false);
@@ -61,7 +59,7 @@ const Todo = () => {
     console.log(id);
     if(id){
       await axios
-      .delete(`http://localhost:3000/api/v2/deleteTask/${Cardid}?id=${id}`)
+      .delete(`http://localhost:3000/api/v2/deleteTask/${Cardid}`)
       .then((response) => {console.log(response)});
      
       // Array.splice(id, "1");

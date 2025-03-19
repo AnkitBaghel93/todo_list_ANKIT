@@ -20,6 +20,13 @@ app.use(cors({
 app.use("/api/v1", auth);
 app.use("/api/v2", list);
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "../frontend/build"))); // Adjust if your build folder is elsewhere
+
+// Handle React routing, return index.html for all non-API routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {
