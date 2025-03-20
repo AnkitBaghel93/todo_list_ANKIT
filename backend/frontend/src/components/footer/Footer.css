@@ -1,0 +1,63 @@
+/* Footer.css */
+.footer {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-brand {
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  font-size: 16px;
+  opacity: 0.9;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.brand-highlight {
+  font-weight: bold;
+  color: #ff758c;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.footer-links li {
+  display: inline;
+  margin: 0 15px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-links a:hover {
+  color: #ff758c;
+}
+
+.footer-credit {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-links li {
+      display: block;
+      margin: 5px 0;
+  }
+}
