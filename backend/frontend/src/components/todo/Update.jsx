@@ -44,7 +44,7 @@ const handleSubmit = async () => {
   
       try {
         const response = await axios.put(
-          `${window.location.origin}/api/v2/updateTask/${update._id}`,
+          `https://todo-list-ankit-f19djopkp-ankit-baghels-projects.vercel.app/api/v2/updateTask/${update._id}`,
           inputs
         );
   

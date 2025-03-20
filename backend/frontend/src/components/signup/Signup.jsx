@@ -23,7 +23,7 @@ const Signup = () => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${window.location.origin}/api/v1/register`, Inputs);
+      const response = await axios.post(`https://todo-list-ankit-f19djopkp-ankit-baghels-projects.vercel.app/api/v1/register`, Inputs);
       console.log("1");
       alert(response.data.message);
       setInputs({

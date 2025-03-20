@@ -24,7 +24,7 @@ const Todo = () => {
     } else {
       if (id) {
         try {
-          const response = await axios.post("http://localhost:3000/api/v2/addTask", {
+          const response = await axios.post("https://todo-list-ankit-f19djopkp-ankit-baghels-projects.vercel.app/api/v2/addTask", {
             title: Inputs.title,
             body: Inputs.body,
             id: id,
@@ -65,7 +65,7 @@ const Todo = () => {
     if (id) {
       setArray((prevArray) => prevArray.filter((task) => task._id !== Cardid));
       try {
-        await axios.delete(`${window.location.origin}/api/v2/deleteTask/${Cardid}`);
+        await axios.delete(`https://todo-list-ankit-f19djopkp-ankit-baghels-projects.vercel.app/api/v2/deleteTask/${Cardid}`);
         toast.success("Your Task is Deleted Successfully!");
       } catch (error) {
         console.error("Error deleting task:", error);
@@ -98,7 +98,7 @@ const Todo = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.post(`${window.location.origin}/api/v2/getTask/${id}`);
+        const response = await axios.post(`https://todo-list-ankit-f19djopkp-ankit-baghels-projects.vercel.app/api/v2/getTask/${id}`);
   
         if (!response || !response.data) {
           throw new Error("Response or response.data is undefined");

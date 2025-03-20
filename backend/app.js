@@ -10,9 +10,11 @@ const list = require("./routes/list");
 app.use(express.json());
 connectDB();
 app.use(cors({
-    origin: "http://localhost:3001",  // Adjust to your frontend port
-    credentials: true,
-  }));
+  origin: 'https://todo-list-ankit-jrjs6m6du-ankit-baghels-projects.vercel.app', 
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}));
+
   
 
 
